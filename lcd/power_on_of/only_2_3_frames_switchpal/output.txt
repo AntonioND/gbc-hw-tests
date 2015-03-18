@@ -1,0 +1,15 @@
+GB, GBP
+-------
+
+XXXX00 [00 ...] -> Shouldn't be seen.
+XXXX01 [00 ...] -> Seen VERY light. Normal palette except first line (inverted).
+XXXX02 [00 ...] -> Seen light. Inverting palettes.
+NNNN02 [00 ...] -> Seen normal. Normal palette.
+
+GBC, GBA, GBA SP
+----------------
+
+XXXX00 [00 ...] -> Shouldn't be seen.
+XXXX01 [00 ...] -> Seen normal. Normal palette except first line (inverted).
+XXXX02 [00 ...] -> Seen normal. Inverting palettes.
+NNNN02 [00 ...] -> Seen normal. Normal palette.

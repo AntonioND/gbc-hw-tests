@@ -1,0 +1,21 @@
+GB, GBP
+-------
+
+XXXX00 [00 ...] -> Shouldn't be seen.
+XXXX01 [00 ...] -> Seen VERY light. Normal palette except first line (inverted).
+XXXX02 [00 ...] -> Seen light. Inverting palettes.
+NNNN02 [00 ...] -> Seen normal. Normal palette.
+
+With 01, lower lines are the following frame first lines (?).
+With 02, same as GBC, but instead of half white, like GB 01.
+
+GBC, GBA, GBA SP
+----------------
+
+XXXX00 [00 ...] -> Shouldn't be seen.
+XXXX01 [00 ...] -> Seen normal. Normal palette except first line (inverted).
+XXXX02 [00 ...] -> Seen normal. Inverting palettes.
+NNNN02 [00 ...] -> Seen normal. Normal palette.
+
+With 01, lower lines are white.
+With 02, lower lines are white half of the drawn frames.

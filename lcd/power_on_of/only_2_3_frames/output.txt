@@ -1,0 +1,15 @@
+GB, GBP
+-------
+
+XXXX00 [00 ...] -> Shouldn't be seen.
+XXXX01 [00 ...] -> Seen VERY light.
+XXXX02 [00 ...] -> Seen light.
+NNNN02 [00 ...] -> Seen normal.
+
+GBC, GBA SP
+-----------
+
+XXXX00 [00 ...] -> Shouldn't be seen.
+XXXX01 [00 ...] -> Seen normal.
+XXXX02 [00 ...] -> Seen normal.
+NNNN02 [00 ...] -> Seen normal.
