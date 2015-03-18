@@ -1,0 +1,2 @@
+All screens should flicker. In GBC and GBA, it should flicker 50/50.
+In previous models, less than 50/50
