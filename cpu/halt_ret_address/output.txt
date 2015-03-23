@@ -1,0 +1,1 @@
+GB, GBP, GBC, GBA, GBA SP -> 00 90 [00 ...]
