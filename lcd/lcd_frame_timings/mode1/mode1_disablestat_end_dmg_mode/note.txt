@@ -1,0 +1,1 @@
+In DMG and MGB there isn't a "last cycle" because of the bug when writing to STAT register.
