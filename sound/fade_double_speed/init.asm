@@ -77,9 +77,9 @@ __CPU_switch:
 	jr	Main
 	NINTENDO_LOGO
 	;    0123456789ABC
-	DB	"LCD TIMINGS.."
+	DB	"SOUND THING.."
 	DW	$0000
-	DB  $00 ;GBC flag
+	DB  $C0 ;GBC flag
 	DB	0,0,0	;SuperGameboy
 	DB	$1B	;CARTTYPE (MBC5+RAM+BATTERY)
 	DB	0	;ROMSIZE
@@ -94,198 +94,59 @@ __CPU_switch:
 Main:
 
 	di
-
-	ld	a,$0A
-	ld	[$0000],a ; enable SRAM
-	
-	; Clear SRAM
-	ld	a,$00
-.clearsram:
-	push	af
-	ld	[$4000],a
-	ld	d,0
-	ld	hl,$A000
-	ld	bc,$2000
-	call	memset
-	pop	af
-	inc	a
-	cp	a,1 ; number of banks to clear
-	jr	nz,.clearsram
-	
-	;--------------------
-	
-	di
-	
-	ld	a,IEF_LCDC
-	ld	[rIE],a
-	ld	a,143
-	ld	[rLYC],a
-	
-	ld	hl,$A000
-	
-	;--------------------
-
-NCYCLES_READ : MACRO
-	ld	b,142
-	call	wait_ly
-	
-	ld	a,STATF_LYC
-	ld	[rSTAT],a
-	
-	xor	a,a
-	ld	[rIF],a
-	
-	halt ; wait for ly 143
-	
-	ld	a,STATF_MODE01
-	ld	[rSTAT],a
-	xor	a
-	ld	[rIF],a
-	
-	REPT 91 + \1
-	nop
-	ENDR
-	
-	ld	a,[rSTAT]
-	
-	ld	[hl+],a
-ENDM
-
-NCYCLES_WRITE_IF : MACRO
-	ld	b,142
-	call	wait_ly
-	
-	ld	a,STATF_LYC
-	ld	[rSTAT],a
-	
-	xor	a,a
-	ld	[rIF],a
-	
-	halt ; wait for ly 143
-	
-	ld	a,STATF_MODE01
-	ld	[rSTAT],a
-	xor	a
-	ld	[rIF],a
-	
-	REPT 91 + \1
-	nop
-	ENDR
-	
-	ld	[rIF],a
-	
-	ld	a,[rIF]
-	ld	[hl+],a
-ENDM
-
-NCYCLES_WRITE_STAT : MACRO
-	ld	b,142
-	call	wait_ly
-	
-	ld	a,STATF_LYC
-	ld	[rSTAT],a
-	xor	a
-	
-	xor	a,a
-	ld	[rIF],a
-	
-	halt ; wait for ly 143
-	
-	ld	a,STATF_MODE01
-	ld	[rSTAT],a
-	xor	a
-	ld	[rIF],a
-	
-	REPT 91 + \1
-	nop
-	ENDR
-	
-	ld	[rSTAT],a
-	
-	ld	a,[rIF]
-	ld	[hl+],a
-ENDM
-
-	NCYCLES_READ 0
-	NCYCLES_READ 1
-	NCYCLES_READ 2
-	NCYCLES_READ 3
-	NCYCLES_READ 4
-	NCYCLES_READ 5
-	NCYCLES_READ 6
-	NCYCLES_READ 7
-	NCYCLES_READ 8
-	NCYCLES_READ 9
-	NCYCLES_READ 10
-	NCYCLES_READ 11
-	NCYCLES_READ 12
-	NCYCLES_READ 13
-	NCYCLES_READ 14
-	NCYCLES_READ 15
-	
-	NCYCLES_WRITE_IF 0
-	NCYCLES_WRITE_IF 1
-	NCYCLES_WRITE_IF 2
-	NCYCLES_WRITE_IF 3
-	NCYCLES_WRITE_IF 4
-	NCYCLES_WRITE_IF 5
-	NCYCLES_WRITE_IF 6
-	NCYCLES_WRITE_IF 7
-	NCYCLES_WRITE_IF 8
-	NCYCLES_WRITE_IF 9
-	NCYCLES_WRITE_IF 10
-	NCYCLES_WRITE_IF 11
-	NCYCLES_WRITE_IF 12
-	NCYCLES_WRITE_IF 13
-	NCYCLES_WRITE_IF 14
-	NCYCLES_WRITE_IF 15
-	
-	NCYCLES_WRITE_STAT 0
-	NCYCLES_WRITE_STAT 1
-	NCYCLES_WRITE_STAT 2
-	NCYCLES_WRITE_STAT 3
-	NCYCLES_WRITE_STAT 4
-	NCYCLES_WRITE_STAT 5
-	NCYCLES_WRITE_STAT 6
-	NCYCLES_WRITE_STAT 7
-	NCYCLES_WRITE_STAT 8
-	NCYCLES_WRITE_STAT 9
-	NCYCLES_WRITE_STAT 10
-	NCYCLES_WRITE_STAT 11
-	NCYCLES_WRITE_STAT 12
-	NCYCLES_WRITE_STAT 13
-	NCYCLES_WRITE_STAT 14
-	NCYCLES_WRITE_STAT 15
-	
-	;--------------------
-	
-	ld	a,$00
-	ld	[$0000],a ; disable SRAM
 	
 	;--------------------
 	
 	ld	a,$80
 	ld	[rNR52],a
-	ld	a,$FF
-	ld	[rNR51],a
 	ld	a,$77
 	ld	[rNR50],a
 	
+	;--
+	
 	ld	a,$C0
-	ld	[rNR11],a
-	ld	a,$E0
-	ld	[rNR12],a
+	ld	[rNR21],a
+	ld	a,$F7
+	ld	[rNR22],a
 	ld	a,$00
-	ld	[rNR13],a
-	ld	a,$87
-	ld	[rNR14],a
+	ld	[rNR23],a
+	ld	a,$84
+	ld	[rNR24],a
 
+	;--------------------
+	
+	ld	a,255
+.loop:
+	push	af
+	
+	ld	b,90
+	call	wait_ly
+	ld	b,0
+	call	wait_ly
+	
+	pop	af
+	dec	a
+	jr	nz,.loop
+	
+	;--------------------
+	
+	call	CPU_fast
+	
+	;--------------------
+	
+	ld	a,$C0
+	ld	[rNR21],a
+	ld	a,$F7
+	ld	[rNR22],a
+	ld	a,$00
+	ld	[rNR23],a
+	ld	a,$84
+	ld	[rNR24],a
+	
+	;--------------------
+	
 .end:
 	halt
 	jr .end
 
-
 ;--------------------------------------------------------------------------
-
-
-

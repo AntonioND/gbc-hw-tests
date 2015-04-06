@@ -140,8 +140,9 @@ NCYCLES_READ : MACRO
 	ld	a,STATF_MODE01
 	ld	[rSTAT],a
 	xor	a
+	ld	[rIF],a
 	
-	REPT 94 + \1
+	REPT 91 + \1
 	nop
 	ENDR
 	
@@ -165,8 +166,9 @@ NCYCLES_WRITE_IF : MACRO
 	ld	a,STATF_MODE01
 	ld	[rSTAT],a
 	xor	a
+	ld	[rIF],a
 	
-	REPT 94 + \1
+	REPT 91 + \1
 	nop
 	ENDR
 	
@@ -191,8 +193,10 @@ NCYCLES_WRITE_STAT : MACRO
 	
 	ld	a,STATF_MODE01
 	ld	[rSTAT],a
+	xor	a
+	ld	[rIF],a
 	
-	REPT 94 + \1
+	REPT 91 + \1
 	nop
 	ENDR
 	
